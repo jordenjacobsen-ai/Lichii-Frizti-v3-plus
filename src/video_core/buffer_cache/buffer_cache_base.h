@@ -472,8 +472,8 @@ public:
     std::unordered_set<DAddr> native_indirect_uniforms_this_frame;
 
 private:
-    template <typename Func>
-    static void ForEachEnabledBit(u64 enabled_mask, Func&& func) {
+    template <typename Mask, typename Func>
+    static void ForEachEnabledBit(Mask enabled_mask, Func&& func) {
         for (u32 index = 0; enabled_mask != 0; ++index, enabled_mask >>= 1) {
             const int disabled_bits = std::countr_zero(enabled_mask);
             index += disabled_bits;

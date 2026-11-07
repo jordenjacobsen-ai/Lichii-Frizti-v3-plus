@@ -794,7 +794,7 @@ bool BufferCache<P>::BindGraphicsStorageBuffer(size_t stage, size_t ssbo_index, 
         }
     }
     channel_state->enabled_storage_buffers[stage] |= u64{1} << ssbo_index;
-    channel_state->written_storage_buffers[stage] |= u64{is_written} << ssbo_index;
+    channel_state->written_storage_buffers[stage] |= u64{is_written ? 1U : 0U} << ssbo_index;
     if constexpr (requires { runtime.ShouldLimitDynamicStorageBuffers(); }) {
         if (runtime.ShouldLimitDynamicStorageBuffers() && !already_enabled) {
             ++channel_state->total_graphics_storage_buffers;
@@ -889,7 +889,7 @@ void BufferCache<P>::BindComputeStorageBuffer(size_t ssbo_index, u32 cbuf_index,
         }
     }
     channel_state->enabled_compute_storage_buffers |= u64{1} << ssbo_index;
-    channel_state->written_compute_storage_buffers |= u64{is_written} << ssbo_index;
+    channel_state->written_compute_storage_buffers |= u64{is_written ? 1U : 0U} << ssbo_index;
     if constexpr (requires { runtime.ShouldLimitDynamicStorageBuffers(); }) {
         if (runtime.ShouldLimitDynamicStorageBuffers() && !already_enabled) {
             ++channel_state->total_compute_storage_buffers;
